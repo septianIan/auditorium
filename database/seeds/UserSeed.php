@@ -16,6 +16,7 @@ class UserSeed extends Seeder
             'name' => 'Administator',
             'email' => 'admin@gmail.test',
             'password' => bcrypt(12345),
+            'role' => 'admin'
         ]);
 
         $roleAdmin->assignRole('admin');
@@ -24,6 +25,7 @@ class UserSeed extends Seeder
             'name' => 'Ketua',
             'email' => 'ketua@gmail.test',
             'password' => bcrypt(12345),
+            'role' => 'ketua'
         ]);
 
         $roleKetua->assignRole('ketua');

@@ -11,6 +11,7 @@ use App\Room;
 use App\RuangFasilitas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 
@@ -65,6 +66,20 @@ class PeminjamanUmumController extends Controller
                 DB::table('detail_peminjaman_umums')->insert($data);
             }
         }
+
+        //SEND EMAIL
+        $email = $request->email;
+        $peminjam = PeminjamanUmum::findOrFail($peminjaman->id);
+        $data = [
+            'nama' => $request->nama,
+            'peminjam' => $peminjam,
+        ];
+
+        Mail::send('admin.template.email_templateUmum', $data, function($mail) use($email){
+            $mail->to($email, 'no-reply')
+                ->subject('Detail Peminjaman');
+            $mail->from('adamwahyu929@gmail.com', 'Peminjaman Auditorium');
+        });
 
         return \redirect()->route('admin.umum.show', $peminjaman->id);
     }

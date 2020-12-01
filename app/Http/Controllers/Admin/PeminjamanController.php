@@ -12,6 +12,7 @@ use App\Room;
 use App\RuangFasilitas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 
@@ -74,6 +75,28 @@ class PeminjamanController extends Controller
                 DB::table('detail_peminjaman')->insert($data);
             }
         }
+
+        //Send Email
+        $email = $request->email;
+        $peminjam = PeminjamanAuditorium::findOrFail($peminjaman->id);
+        $data = [
+            'nama' => $request->nama,
+            'peminjam' => $peminjam,
+        ];
+
+        //kirim email
+        Mail::send('admin.template.email_template', $data, function($mail) use($email){
+            $mail->to($email, 'no-reply')
+                ->subject('Detail Peminjaman');
+            $mail->from('adamwahyu929@gmail.com', 'Peminjaman Auditorium');
+        });
+
+        //cek kegagalan
+        // if (Mail::failures()) {
+        //     return "Gagal mengirim Email";
+        // }
+        //     return "Email berhasil dikirim!";
+
 
         return \redirect()->route('admin.peminjaman.show', $peminjaman->id);
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DetailPeminjaman;
 use App\DetailPeminjamanPegawai;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RequestFormPeminjamanPegawai;
 use App\Room;
 use Illuminate\Http\Request;
 use App\Http\Requests\RequestFromPeminjaman;
@@ -14,6 +15,7 @@ use App\PeminjamanAuditoriumPegawai;
 use App\RuangFasilitas;
 use PDF;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -45,7 +47,7 @@ class PeminjamanPegawaiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestFormPeminjamanPegawai $request)
     {   
         $nik = DB::table('pegawais')->where('nik', $request->nik)->first();
         if (empty($nik)) {
@@ -74,6 +76,20 @@ class PeminjamanPegawaiController extends Controller
                 DB::table('detail_peminjaman_pegawais')->insert($data);
             }
         }
+
+        //SEND EMAIL
+        $email = $request->email;
+        $peminjam = PeminjamanAuditoriumPegawai::findOrFail($peminjaman->id);
+        $data = [
+            'nama' => $request->nama,
+            'peminjam' => $peminjam,
+        ];
+
+        Mail::send('admin.template.email_templatePegawai', $data, function($mail) use($email){
+            $mail->to($email, 'no-reply')
+                ->subject('Detail Peminjaman');
+            $mail->from('adamwahyu929@gmail.com', 'Peminjaman Auditorium');
+        });
 
         return \redirect()->route('admin.pegawai.show', $peminjaman->id);
     }

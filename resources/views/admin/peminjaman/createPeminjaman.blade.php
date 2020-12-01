@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-<form action="{{ route('admin.peminjaman.store') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('admin.peminjaman.store') }}" method="post" id="myForm" enctype="multipart/form-data">
 @csrf
 <div class="container">
    <div class="row">
@@ -160,29 +160,34 @@
             </div>
             <div class="card-body">
                <label for="">Nama Ruang</label>
+               <input type="hidden" name="room_id" id="room_id" value="{{ $room->id }}">
                <select name="room" class="form-control @error('room') is-invalid @enderror" id="">
                   <option value="{{ $room->id }}">{{ $room->ruang }}</option>
                </select>
-               <input type="hidden" name="room_id" id="room_id" value="{{ $room->id }}">
                <label for="">Fasilitas</label>
-               
-               <div class="row">
                   @foreach($room->fasilitas as $value)
-                     <div class="col-sm-6" id="1">
+                  <div class="row">
+                     <div class="col-sm-6">
                         <input type="hidden" value="{{ $value->id }}" name="idRuangFasilitas[]">
-                        <input type="text" class="form-control mt-2" value="{{ $value->fasilitas }}" name="fasilitas[]">
+                        <input type="text" class="form-control mt-2" value="{{ $value->fasilitas }}" readonly>
                      </div>
                      <div class="col-sm-2" id="2">
                         <input type="number" class="form-control mt-2 jumlah" placeholder="Jumlah ..." value="{{ $value->jumlah }}" id="jumlah{{ $loop->iteration }}" name="jumlah[]">
                      </div>
-                     <div class="col-sm-2" id="4">
-                        <font style="font-size:14px;">Stok : {{ $value->jumlah }}</font>
+                     <div class="col-sm-2" id="checkboxes">
+                        <input type="checkbox" class="form-control check_list mt-2" value="{{ $value->fasilitas }}" name="fasilitas[]" required>
                      </div>
-                     {{-- <div class="col-sm-2 mt-2" id="3" style="display:inline;">
-                        <a href="#" class="btn btn-danger remove" data-id="{{ $value->id }}">X</a>
-                     </div> --}}
+                  </div>
                   @endforeach
-               </div>
+                  <hr>
+                  <div class="row">
+                     <div class="col-sm-8">
+                        <label for="">Check List All</label>
+                     </div>
+                     <div class="col-sm-2">
+                        <input type="checkbox" id="checkall" class="form-control" >
+                     </div>
+                  </div>
             </div>
          </div>
       </div>
@@ -206,6 +211,7 @@
 
 <script>
    $(document).ready(function(){
+
       $("#nim").change(function(){
          var nim = $(this).val();
          $.ajax({
@@ -287,13 +293,12 @@
       $('#notif').fadeTo(2000, 500).slideUp(500, function(){
             $('#notif').slideUp(500);
       })
+
    });
 
-   $('.remove').live('click', function() {
-      $('#1').remove();
-      $('#2').remove();
-      $('#3').remove();
-      $('#4').remove();
+   $("#checkall").click(function(){
+      $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+
    });
 </script>
 @endpush

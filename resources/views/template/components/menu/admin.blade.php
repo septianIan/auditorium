@@ -139,3 +139,13 @@
          </p>
       </a>
    </li>
+
+   <li class="nav-header">User Kontrol</li>
+   <li class="nav-item">
+      <a href="{{ route('admin.user.index') }}" class="nav-link">
+         <i class="fa fa-user" aria-hidden="true"></i>
+         <p>
+            User
+         </p>
+      </a>
+   </li>

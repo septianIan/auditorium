@@ -24,3 +24,6 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('template-email', function(){
+    return view('admin.template.email_default');
+});

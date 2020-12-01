@@ -35,9 +35,6 @@
                center: 'Kalender',
                right: 'month, basicWeek, basicDay'
             },
-            initialView: 'dayGridMonth',
-            initialDate: '2020-11-12',
-            eventColor: 'green',
             events: [
                @foreach($students as $student)
                      {

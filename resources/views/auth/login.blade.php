@@ -23,7 +23,7 @@
 
 .hero {
     background:
-    linear-gradient(to right, rgba(75, 123, 211, 0.5), rgba(22, 215, 177, 0.3)),    url('{{ asset('assets/img/bg2.jpg') }}');
+    linear-gradient(to right, rgba(75, 123, 211, 0.5), rgba(22, 215, 177, 0.3));
     
     width: 100vw;
     height: 100vh;

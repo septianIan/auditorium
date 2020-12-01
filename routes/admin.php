@@ -111,3 +111,8 @@ Route::post('laporan/cekUmum', 'Laporan\LaporanController@cekUmum')->name('lapor
  * Calendar
  */
 Route::get('calendar', 'kelender\CalendarController@indexAdmin')->name('calendar.index');
+
+/**
+ * User Control
+ */
+Route::resource('user', 'UserController');

@@ -156,14 +156,20 @@
                      <div class="col-sm-2" id="jumlah_{{ $loop->iteration }}">
                         <input type="number" class="form-control mt-2 jumlah" placeholder="Jumlah ..." value="{{ $value->jumlah }}" onchange="stok()" name="jumlah[]">
                      </div>
-                     <div class="col-sm-2">
-                        <font style="font-size:14px;">Stok</font><p style="font-size:14px;" class="stok" id="stok_{{ $loop->iteration }}">{{ $value->jumlah }}</p>
+                     <div class="col-sm-2" id="checkboxes">
+                        <input type="checkbox" class="form-control check_list mt-2" value="{{ $value->fasilitas }}" name="fasilitas[]" required>
                      </div>
-                     {{-- <div class="col-sm-2 mt-2" style="display:inline;">
-                        <a href="#" class="btn btn-danger remove fasilitasAuditorium" data-id="{{ $value->id }}">X</a>
-                     </div> --}}
                   </div>
                   @endforeach
+                  <hr>
+                  <div class="row">
+                     <div class="col-sm-8">
+                        <label for="">Check List All</label>
+                     </div>
+                     <div class="col-sm-2">
+                        <input type="checkbox" id="checkall" class="form-control" >
+                     </div>
+                  </div>
             </div>
          </div>
       </div>
@@ -269,8 +275,9 @@
       })
    });
 
-   $('.remove').click(function() {
-      $('.remove').closest('div').remove();
+   $("#checkall").click(function(){
+      $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+
    });
 </script>
 @endpush
