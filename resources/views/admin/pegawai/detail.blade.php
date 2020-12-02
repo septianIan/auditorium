@@ -2,7 +2,7 @@
 @section('title', 'Detail data pegawai')
 @section('breadcrumb')
 <ol class="breadcrumb float-sm-right">
-   <li class="breadcrumb-item active"><a href="{{ route('admin.pegawai.index') }}">Data pegawai</a></li>
+   <li class="breadcrumb-item active"><a href="{{ route('admin.masterPegawai.index') }}">Data pegawai</a></li>
 </ol>
 @endsection
 @section('content')

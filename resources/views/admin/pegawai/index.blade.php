@@ -18,7 +18,7 @@
                   @if(session('pesan'))
                      <div class="alert alert-success alert-flat" id="notif">{{ session('pesan') }}</div>
                   @endif
-                  <a href="{{ route('admin.pegawai.create') }}" class="btn btn-success btn-flat mb-2">Tambah pegawai</a>
+                  <a href="{{ route('admin.masterPegawai.create') }}" class="btn btn-success btn-flat mb-2">Tambah pegawai</a>
                   <table id="dataTable" class="table table-bordered table-striped">
                      <thead>
                         <tr>
@@ -65,7 +65,7 @@
          "serverSide" : true,
          "responsive" : true,
          "autoWidth" : true,
-         ajax: '{{ route('admin.data.pegawai') }}',
+         ajax: '{{ route('admin.data.masterPegawai') }}',
          columns : [
             {data: 'DT_RowIndex'},
             {data: 'nik'},
@@ -94,7 +94,7 @@
             if (result.value) {
                $.ajax({
                   type: "DELETE",
-                  url: "/administator/pegawai/"+id,
+                  url: "/administator/masterPegawai/"+id,
                   data: {
                      "id": id,
                      "_token": "{{ csrf_token() }}"

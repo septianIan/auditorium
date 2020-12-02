@@ -56,9 +56,9 @@
                      <tbody>
                         @foreach($peminjam->fasilitas as $fasilitas)
                         <tr>
-                              <td>{{ $loop->iteration }}</td>
-                              <td>{{ $fasilitas->fasilitas }}</td>
-                              <td>{{ $fasilitas->jumlah }}</td>
+                           <td>{{ $loop->iteration }}</td>
+                           <td>{{ $fasilitas->fasilitas }}</td>
+                           <td>{{ $fasilitas->jumlah }}</td>
                         </tr>
                         @endforeach
                      </tbody>

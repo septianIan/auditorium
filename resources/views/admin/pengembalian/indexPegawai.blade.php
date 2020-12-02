@@ -43,7 +43,7 @@
                            <td>
                               <div class="btn-group align-middle py-0">
                                  {{-- Detail --}}
-                                 <a href="{{ route('admin.detail.pegawai', $employe->id) }}" class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                 <a href="{{ route('admin.pegawai.show', $employe->id) }}" class="btn btn-warning"><i class="fa fa-eye"></i></a>
                               </div>
                            </td>
                         </tr>

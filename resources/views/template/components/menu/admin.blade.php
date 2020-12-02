@@ -19,7 +19,7 @@
    </li>
 
    <li class="nav-item">
-      <a href="{{ route('admin.pegawai.index') }}" class="nav-link">
+      <a href="{{ route('admin.masterPegawai.index') }}" class="nav-link">
          <i class="fa fa-user" aria-hidden="true"></i>
          <p>
             Master pegawai

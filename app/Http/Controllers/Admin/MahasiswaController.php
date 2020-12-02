@@ -114,13 +114,13 @@ class MahasiswaController extends Controller
     {
         $peminjaman = PeminjamanAuditorium::where('mahasiswa_id', $mahasiswa->id)->first();
 
-        if ($peminjaman != '' && $peminjaman->status == 0 || empty($peminjaman)) {
+        if (empty($peminjaman)) {
             $mahasiswa->delete();
             $success = true;
             $message = 'Data berhasil dihapus';
-        } else if($peminjaman != '' && $peminjaman->status == 1){
+        } else if($peminjaman != ''){
             $success = \false;
-            $message = 'Mahasiswa masih dalam pinjaman';
+            $message = 'Mahasiswa masih dalam pinjaman atau memiliki riwayat';
         }
         return \response()->json([
             'success' => $success,

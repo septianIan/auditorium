@@ -47,7 +47,7 @@ class PegawaiController extends Controller
         $data = $request->except('_token');
         Pegawai::create($data);
         \session()->flash('pesan', 'Data pegawai berhasil ditambahkan');
-        return \redirect()->route('admin.pegawai.index');
+        return \redirect()->route('admin.masterPegawai.index');
     }
 
     /**
@@ -56,8 +56,9 @@ class PegawaiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Pegawai $pegawai)
+    public function show($id)
     {
+        $pegawai = Pegawai::findOrFail($id);
         return view('admin.pegawai.detail', [
             'pegawai' => $pegawai
         ]);
@@ -69,8 +70,9 @@ class PegawaiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pegawai $pegawai)
+    public function edit($id)
     {
+        $pegawai = Pegawai::findOrFail($id);
         return view('admin.pegawai.edit', [
             'pegawai' => $pegawai
         ]);
@@ -95,7 +97,7 @@ class PegawaiController extends Controller
         $data = $request->except('_token');
         $pegawai->update($data);
         \session()->flash('pesan', 'Data pegawai berhasil diubah');
-        return \redirect()->route('admin.pegawai.index');
+        return \redirect()->route('admin.masterPegawai.index');
     }
 
     /**
@@ -104,17 +106,18 @@ class PegawaiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pegawai $pegawai)
+    public function destroy($id)
     {
-        $peminjaman = PeminjamanAuditoriumPegawai::where('pegawai_id', $pegawai->id)->first();
+        $peminjaman = PeminjamanAuditoriumPegawai::where('pegawai_id', $id)->first();
 
-        if ($peminjaman != '' && $peminjaman->status == 0 || empty($peminjaman)) {
+        if (empty($peminjaman)) {
+            $pegawai = Pegawai::find($id);
             $pegawai->delete();
             $success = true;
             $message = 'Data berhasil dihapus';
-        } else if($peminjaman != '' && $peminjaman->status == 1){
+        } else if($peminjaman != ''){
             $success = \false;
-            $message = 'Pegawai masih dalam pinjaman';
+            $message = 'Pegawai masih dalam pinjaman atau memiliki riwayat';
         }
         return \response()->json([
             'success' => $success,

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Laporan;
+namespace App\Http\Controllers\Admin\Laporan;
 
 use App\Http\Controllers\Controller;
 use App\PeminjamanAuditorium;
@@ -23,11 +23,11 @@ class LaporanController extends Controller
         $dari = Carbon::parse($from)->format('d, M Y');
         $sampai = Carbon::parse($to)->format('d, M Y');
 
-        $mahasiswa = PeminjamanAuditorium::where('status' ,0)
+        $mahasiswa = PeminjamanAuditorium::where('status' ,1)
             ->whereBetween('tglPinjam', [$from, $to])->get();
-        $pegawai = PeminjamanAuditoriumPegawai::where('status' ,0)
+        $pegawai = PeminjamanAuditoriumPegawai::where('status' ,1)
             ->whereBetween('tglPinjam', [$from, $to])->get();
-        $umum = PeminjamanUmum::where('status' ,0)
+        $umum = PeminjamanUmum::where('status' ,1)
             ->whereBetween('tglPinjam', [$from, $to])->get();
         return view('laporan.cetakLaporan' ,\compact(
             'mahasiswa', 'pegawai', 'umum', 'dari', 'sampai'
@@ -41,7 +41,7 @@ class LaporanController extends Controller
         $dari = Carbon::parse($from)->format('d, M Y');
         $sampai = Carbon::parse($to)->format('d, M Y');
 
-        $mahasiswa = PeminjamanAuditorium::where('status' ,0)
+        $mahasiswa = PeminjamanAuditorium::where('status' ,1)
             ->whereBetween('tglPinjam', [$from, $to])->get();
         return view('laporan.cetakLaporanMahasiswa' ,\compact('mahasiswa', 'dari', 'sampai'));
     }
@@ -53,7 +53,7 @@ class LaporanController extends Controller
         $dari = Carbon::parse($from)->format('d, M Y');
         $sampai = Carbon::parse($to)->format('d, M Y');
 
-        $pegawai = PeminjamanAuditoriumPegawai::where('status' ,0)
+        $pegawai = PeminjamanAuditoriumPegawai::where('status' ,1)
             ->whereBetween('tglPinjam', [$from, $to])->get();
         return view('laporan.cetakLaporanPegawai' ,\compact('pegawai', 'dari', 'sampai'));
     }
@@ -65,7 +65,7 @@ class LaporanController extends Controller
         $dari = Carbon::parse($from)->format('d, M Y');
         $sampai = Carbon::parse($to)->format('d, M Y');
 
-        $umum = PeminjamanUmum::where('status' ,0)
+        $umum = PeminjamanUmum::where('status' ,1)
             ->whereBetween('tglPinjam', [$from, $to])->get();
         return view('laporan.cetakLaporanUmum' ,\compact('umum', 'dari', 'sampai'));
     }

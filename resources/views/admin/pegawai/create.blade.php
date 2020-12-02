@@ -2,7 +2,7 @@
 @section('title', 'Buat data pegawai')
 @section('breadcrumb')
 <ol class="breadcrumb float-sm-right">
-   <li class="breadcrumb-item active"><a href="{{ route('admin.pegawai.index') }}">Data pegawai</a></li>
+   <li class="breadcrumb-item active"><a href="{{ route('admin.masterPegawai.index') }}">Data pegawai</a></li>
 </ol>
 @endsection
 @section('content')
@@ -14,7 +14,7 @@
                   <h3 class="card-title">Buat data pegawai</h3>
                </div>
                <div class="card-body">
-                  <form action="{{ route('admin.pegawai.store') }}" method="post">
+                  <form action="{{ route('admin.masterPegawai.store') }}" method="post">
                   @csrf
                      <label for="">Nik</label>
                      <input type="number" name="nik" value="{{ old('nik') }}" class="form-control @error('nik') is-invalid @enderror" placeholder="Nik ...">

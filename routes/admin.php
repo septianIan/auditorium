@@ -25,9 +25,9 @@ Route::get('data/mahasiswa', 'MahasiswaController@dataTableMahasiswa')->name('da
 /**
  * Pegawai
  */
-Route::resource('pegawai', 'PegawaiController');
+Route::resource('masterPegawai', 'PegawaiController');
 //dataTable
-Route::get('data/pegawai', 'PegawaiController@dataTablePegawai')->name('data.pegawai');
+Route::get('data/masterPegawai', 'PegawaiController@dataTablePegawai')->name('data.masterPegawai');
 
 /**
  * Data auditorium

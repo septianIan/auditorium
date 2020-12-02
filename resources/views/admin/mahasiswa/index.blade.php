@@ -23,7 +23,7 @@
                      <thead>
                         <tr>
                            <th>No</th>
-                           <th>Nik</th>
+                           <th>Nim</th>
                            <th>Nama</th>
                            <th>Fakultas</th>
                            <th>Jurusan</th>

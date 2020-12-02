@@ -145,7 +145,7 @@
                   <div class="row" id="hapus_{{ $loop->iteration }}">
                      <div class="col-sm-6">
                         <input type="hidden" value="{{ $value->id }}" name="idRuangFasilitas[]">
-                        <input type="text" class="form-control mt-2 fasilitasAuditorium" value="{{ $value->fasilitas }}" data-id="{{ $loop->iteration }}" name="fasilitas[]">
+                        <input type="text" class="form-control mt-2 fasilitasAuditorium" value="{{ $value->fasilitas }}" data-id="{{ $loop->iteration }}" name="" readonly>
                      </div>
                      <div class="col-sm-2" id="jumlah_{{ $loop->iteration }}">
                         <input type="number" class="form-control mt-2 jumlah" placeholder="Jumlah ..." value="{{ $value->jumlah }}" onchange="stok()" name="jumlah[]">
