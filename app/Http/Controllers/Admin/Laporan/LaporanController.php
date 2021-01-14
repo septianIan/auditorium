@@ -69,4 +69,29 @@ class LaporanController extends Controller
             ->whereBetween('tglPinjam', [$from, $to])->get();
         return view('laporan.cetakLaporanUmum' ,\compact('umum', 'dari', 'sampai'));
     }
+
+    
+    public function allPeminjaman()
+    {
+        $dateNow = \date('Y-m-d');
+        $peminjamanMahasiswa = PeminjamanAuditorium::with('mahasiswa')->where([
+            ['status', '=', 1],
+            ['tglPinjam', '<=' ,$dateNow]
+        ])->get();
+        $peminjamanPegawai = PeminjamanAuditoriumPegawai::with('pegawai')->where([
+            ['status', '=', 1],
+            ['tglPinjam', '<=' ,$dateNow]
+        ])->get();
+        $peminjamanUmum = PeminjamanUmum::where([
+            ['status', '=', 1],
+            ['tglPinjam', '<=' ,$dateNow]
+        ])->get();
+        // \dd($peminjamanMahasiswa, $peminjamanUmum, $peminjamanPegawai);
+
+        return view('laporan.semuaPeminjaman', \compact(
+            'peminjamanMahasiswa', 
+            'peminjamanPegawai',
+            'peminjamanUmum'
+        ));
+    }
 }

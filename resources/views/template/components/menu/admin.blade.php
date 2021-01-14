@@ -122,6 +122,16 @@
    </li>
 
    <li class="nav-header">Monitoring</li>
+
+   <li class="nav-item">
+      <a href="{{ route('admin.laporan.semuaPeminjaman') }}" class="nav-link">
+         <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+         <p>
+            Semua Peminjaman
+         </p>
+      </a>
+   </li>
+
    <li class="nav-item">
       <a href="{{ route('admin.calendar.index') }}" class="nav-link">
          <i class="fa fa-calendar" aria-hidden="true"></i>

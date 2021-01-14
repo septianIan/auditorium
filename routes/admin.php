@@ -108,6 +108,11 @@ Route::post('laporan/cekPegawai', 'Laporan\LaporanController@cekPegawai')->name(
 Route::post('laporan/cekUmum', 'Laporan\LaporanController@cekUmum')->name('laporan.cekUmum');
 
 /**
+ * Semua Meninjaman
+ */
+Route::get('laporan/semuaPeminjaman', 'Laporan\LaporanController@allPeminjaman')->name('laporan.semuaPeminjaman');
+
+/**
  * Calendar
  */
 Route::get('calendar', 'kelender\CalendarController@indexAdmin')->name('calendar.index');
