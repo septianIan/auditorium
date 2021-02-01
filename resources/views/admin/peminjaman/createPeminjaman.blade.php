@@ -118,7 +118,7 @@
                <div class="row">
                   <div class="col-sm-6">
                      <label for="">Dari jam</label>
-                     <input type="time" name="dariJam" value="{{ old('dariJam') }}" class="form-control @error('dariJam') is-invalid @enderror">
+                     <input type="time" name="dariJam" id="dariJam" value="{{ old('dariJam') }}" class="form-control @error('dariJam') is-invalid @enderror">
                      @error('dariJam')
                      <div class="invalid-feedback">
                         {{ $message }}
@@ -248,16 +248,18 @@
       });
 
       //
-      $('#tglPinjam').change(function(){
-         var tglPinjam = $(this).val();
+      $('#dariJam').change(function(){
+         var tglPinjam = $('#tglPinjam').val();
          var room_id = $('#room_id').val();
+         var dariJam = $(this).val();
          $.ajax({
             type: "POST",
             url: "{{ route('admin.cariTglPinjam.data') }}",
             data: {
                "_token": "{{ csrf_token() }}",
                'tglPinjam': tglPinjam,
-               'room_id': room_id
+               'room_id': room_id,
+               'dariJam': dariJam
             },
             beforeSend: function(){
                $("#nim").css("background","#FFF url({{ asset('assets/gif/loading3.gif') }}) no-repeat 115px");
@@ -281,7 +283,8 @@
 
       function getResetTglPinjam()
       {
-         $('#tglPinjam').val('');
+         //$('#tglPinjam').val('');
+         $('#dariJam').val('');
       }
 
       function getResetNim()

@@ -38,6 +38,7 @@ class RelRuangFasilitasController extends Controller
                     'room_id' => $request->room,
                     'fasilitas' => $request->fasilitas[$key]
                 ];
+                //jika sudah ada datanya, adata yg sudah ada akan diupdate
                 RuangFasilitas::updateOrCreate($data);
             }
         }
@@ -54,6 +55,7 @@ class RelRuangFasilitasController extends Controller
 
     public function update(Request $request, $id)
     {   
+        //multiple update
         for ($i=0; $i < \count($request->idRuangFasilitas); $i++) { 
             RuangFasilitas::where('id', $request->idRuangFasilitas[$i])
             ->update([

@@ -121,3 +121,10 @@ Route::get('calendar', 'kelender\CalendarController@indexAdmin')->name('calendar
  * User Control
  */
 Route::resource('user', 'UserController');
+
+/**
+ * Route
+ * Testing drive development
+ */
+
+Route::post('peminjaman/store', 'PeminjamanController@store');

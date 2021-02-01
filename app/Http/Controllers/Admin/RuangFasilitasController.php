@@ -9,6 +9,7 @@ use App\PeminjamanAuditoriumPegawai;
 use App\PeminjamanUmum;
 use App\Room;
 use App\RuangFasilitas;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -50,10 +51,7 @@ class RuangFasilitasController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Form Peminjaman Mahasiswa, pegawai dan umum 
      */
     public function peminjamanMahasiswa($id)
     {
@@ -107,6 +105,10 @@ class RuangFasilitasController extends Controller
         //
     }
 
+
+    /**
+     * Untuk mencari nim dengan request ajax
+     */
     public function cariNim(Request $request)
     {
         $nim = DB::table('mahasiswas')->where('nim', $request->nim)->first();
@@ -126,44 +128,61 @@ class RuangFasilitasController extends Controller
         ]);
     }
 
-    public function cariTglPinjam(Request $request)
-    {
-        $tglPinjamMaha = PeminjamanAuditorium::where([
-            ['room_id', '=', $request->room_id],
-            ['tglPinjam', '=', $request->tglPinjam]
-            ])->first();
-        $tglPinjamPegawai = PeminjamanAuditoriumPegawai::where([
-            ['room_id', '=', $request->room_id],
-            ['tglPinjam', '=', $request->tglPinjam]
-            ])->first();
-        $tglPinjamUmum = PeminjamanUmum::where([
-            ['room_id', '=', $request->room_id],
-            ['tglPinjam', '=', $request->tglPinjam]
-            ])->first();
+    // public function cariTglPinjam(Request $request)
+    // {
+    //     $tglPinjamMaha = PeminjamanAuditorium::where([
+    //         ['room_id', '=', $request->room_id],
+    //         ['tglPinjam', '=', $request->tglPinjam],
+    //         ['dariJam', '=', $request->dariJam]
+    //         ])->first();
+    //     $tglPinjamPegawai = PeminjamanAuditoriumPegawai::where([
+    //         ['room_id', '=', $request->room_id],
+    //         ['tglPinjam', '=', $request->tglPinjam]
+    //         ])->first();
+    //     $tglPinjamUmum = PeminjamanUmum::where([
+    //         ['room_id', '=', $request->room_id],
+    //         ['tglPinjam', '=', $request->tglPinjam]
+    //         ])->first();
 
-        switch (true) {
-            case ($tglPinjamMaha != "" && $tglPinjamMaha->status == 1):
-                $success = true;
-                $message = 'Tanggal '.$tglPinjamMaha->tglPinjam.' Ruangan '.$tglPinjamMaha->room->ruang.' masih di gunakan !!!';
-                break;
-            case($tglPinjamPegawai != "" && $tglPinjamPegawai->status == 1):
-                $success = true;
-                $message = 'Tanggal '.$tglPinjamPegawai->tglPinjam.' Ruangan '.$tglPinjamPegawai->room->ruang.' masih di gunakan !!!';
-                break;
-            case($tglPinjamUmum != "" && $tglPinjamUmum->status == 1):
-                $success = true;
-                $message = 'Tanggal '.$tglPinjamUmum->tglPinjam.' Ruangan '.$tglPinjamUmum->room->ruang.' masih di gunakan !!!';
-                break;
-            default:
-                $success = false;
-                $message = 'Tanggal siap digunakan';
-                break;
-        }
-        return \response()->json([
-            'success' => $success,
-            'message' => $message,
-        ]);
-    }
+    //     // return \response()->json($tglPinjamMaha);
+
+    //     switch (true) {
+    //         case ($tglPinjamMaha != "" && $tglPinjamMaha->status == 1):
+
+    //             $startTime = \Carbon\Carbon::createFromFormat('H:i', $tglPinjamMaha->dariJam);
+    //             $endTime = \Carbon\Carbon::createFromFormat('H:i', $tglPinjamMaha->sampaiJam);
+    //             $dariJam = \Carbon\Carbon::createFromFormat('H:i', $request->dariJam);
+
+    //             if ($dariJam->between($startTime, $endTime, true)) {
+    //                 $success = true;
+    //                 $message = 'Tanggal '.$tglPinjamMaha->tglPinjam.' Ruangan '.$tglPinjamMaha->room->ruang.' masih di gunakan sampai jam '.$tglPinjamMaha->sampaiJam.' !!!';
+    //                 break;
+    //             } else {
+    //                 $success = false;
+    //                 $message = 'Tanggal siap digunakan';
+    //                 break;
+    //             }
+    //             // $success = true;
+    //             // $message = 'Tanggal '.$tglPinjamMaha->tglPinjam.' Ruangan '.$tglPinjamMaha->room->ruang.' masih di gunakan sampai jam '.$tglPinjamMaha->sampaiJam.' !!!';
+    //             break;
+    //         case($tglPinjamPegawai != "" && $tglPinjamPegawai->status == 1):
+    //             $success = true;
+    //             $message = 'Tanggal '.$tglPinjamPegawai->tglPinjam.' Ruangan '.$tglPinjamPegawai->room->ruang.' masih di gunakan sampai jam '.$tglPinjamPegawai->sampaiJam.' !!!';
+    //             break;
+    //         case($tglPinjamUmum != "" && $tglPinjamUmum->status == 1):
+    //             $success = true;
+    //             $message = 'Tanggal '.$tglPinjamUmum->tglPinjam.' Ruangan '.$tglPinjamUmum->room->ruang.' masih di gunakan sampai jam '.$tglPinjamUmum->sampaiJam.' !!!';
+    //             break;
+    //         default:
+    //             $success = false;
+    //             $message = 'Tentukan Jam';
+    //             break;
+    //     }
+    //     return \response()->json([
+    //         'success' => $success,
+    //         'message' => $message,
+    //     ]);
+    // }
 
     public function cariStok(Request $request)
     {
@@ -171,6 +190,9 @@ class RuangFasilitasController extends Controller
         return \response()->json($relRuangFasilitas);
     }
 
+    /**
+     * Cari Nik dengan request ajax
+     */
     public function cariNik(Request $request)
     {
         $nik = DB::table('pegawais')->where('nik', $request->nik)->first();

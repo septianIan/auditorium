@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 
 class LaporanController extends Controller
 {
+    /**
+     * Laporan peminjaman mahasiswa, pegawai dan umum
+     */
     public function index()
     {
         return view('laporan.index');
@@ -70,21 +73,27 @@ class LaporanController extends Controller
         return view('laporan.cetakLaporanUmum' ,\compact('umum', 'dari', 'sampai'));
     }
 
-    
+    /**
+     * Semua peminjaman yang belum mengembalikan
+     */
     public function allPeminjaman()
     {
         $dateNow = \date('Y-m-d');
+        $jam = Carbon::now()->format('H:i');
         $peminjamanMahasiswa = PeminjamanAuditorium::with('mahasiswa')->where([
             ['status', '=', 1],
-            ['tglPinjam', '<=' ,$dateNow]
+            ['tglPinjam', '<=' ,$dateNow],
+            ['sampaiJam', '<=' ,$jam]
         ])->get();
         $peminjamanPegawai = PeminjamanAuditoriumPegawai::with('pegawai')->where([
             ['status', '=', 1],
-            ['tglPinjam', '<=' ,$dateNow]
+            ['tglPinjam', '<=' ,$dateNow],
+            ['sampaiJam', '<=' ,$jam]
         ])->get();
         $peminjamanUmum = PeminjamanUmum::where([
             ['status', '=', 1],
-            ['tglPinjam', '<=' ,$dateNow]
+            ['tglPinjam', '<=' ,$dateNow],
+            ['sampaiJam', '<=' ,$jam]
         ])->get();
         // \dd($peminjamanMahasiswa, $peminjamanUmum, $peminjamanPegawai);
 

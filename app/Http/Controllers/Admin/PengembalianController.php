@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class PengembalianController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Index mahasiswa, pegawai dan umum.
      *
      * @return \Illuminate\Http\Response
      */
@@ -55,7 +55,7 @@ class PengembalianController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Detail pengembalian Auditorium mahasiswa, pegawai dan umum
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

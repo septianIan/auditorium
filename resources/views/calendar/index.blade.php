@@ -41,7 +41,7 @@
             events: [
                @foreach($students as $student)
                      {
-                        title: '{{ $student->mahasiswa->nama.' | '.$student->kegiatan }}',
+                        title: '{{ $student->mahasiswa->nama.' | '.$student->dariJam }} - {{ $student->sampaiJam }}',
                         start: '{{ $student->tglPinjam }}',
                         url: 'peminjaman/{{ $student->id }}',
                         color: 'blue'
@@ -49,7 +49,7 @@
                @endforeach
                @foreach($employees as $employee)
                      {
-                        title: '{{ $employee->pegawai->nama.' | '.$employee->kegiatan }}',
+                        title: '{{ $employee->pegawai->nama.' | '.$employee->dariJam }} - {{ $employee->sampaiJam }}',
                         start: '{{ $employee->tglPinjam }}',
                         url: 'pegawai/{{ $employee->id }}',
                         color: 'green'
@@ -57,7 +57,7 @@
                @endforeach
                @foreach($umums as $umum)
                      {
-                        title: '{{ $umum->nama.' | '.$umum->kegiatan }}',
+                        title: '{{ $umum->nama.' | '.$umum->dariJam. ''.$umum->sampaiJam }}',
                         start: '{{ $umum->tglPinjam }}',
                         url: 'umum/{{ $umum->id }}',
                         color: 'orange'

@@ -38,8 +38,13 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * jika level admin akan di arahkan ke url /administator
+     * jika level katua akan di arahkan ke url /ketua
+     */
     public function redirectTo()
-    {
+    {   
+        
         if (auth()->user()->hasRole('admin')) {
             return '/administator';
         } elseif(auth()->user()->hasRole('ketua')){

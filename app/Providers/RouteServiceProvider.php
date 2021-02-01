@@ -37,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Define the routes for the application.
-     *
+     * Daftar kan rout mapnya
      * @return void
      */
     public function map()
@@ -65,6 +65,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/web.php'));
     }
 
+    //Route untuk admin
     protected function mapAdminRoutes()
     {
         Route::middleware('web', 'auth', 'role:admin')
@@ -74,6 +75,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(\base_path('routes/admin.php'));
     }
 
+    //Route untuk ketua
     protected function mapKetuaRoutes()
     {
         Route::middleware('web', 'auth', 'role:ketua')

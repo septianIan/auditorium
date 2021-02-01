@@ -10,6 +10,7 @@ use App\PeminjamanAuditorium;
 use App\PeminjamanAuditoriumPegawai;
 use App\Room;
 use App\RuangFasilitas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -45,12 +46,51 @@ class PeminjamanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(RequestFromPeminjaman $request)
-    {   
-        $nim = DB::table('mahasiswas')->where('nim', $request->nim)->first();
-        if (empty($nim)) {
-            \session()->flash('pesan', 'User belum terdaftar');
-            return \redirect()->back();
-        }
+    {  
+        // $tglPinjamMaha = PeminjamanAuditorium::where([
+        //     ['room_id', '=', $request->room_id],
+        //     ['tglPinjam', '=', $request->tglPinjam],
+        // ])->get();
+        
+        // if ($tglPinjamMaha) {
+        //     foreach ($tglPinjamMaha as $value) {
+        //         $startTime = \Carbon\Carbon::createFromFormat('H:i', $value->dariJam);
+        //         $endTime = \Carbon\Carbon::createFromFormat('H:i', $value->sampaiJam);
+        //     }
+        //     $dariJam = \Carbon\Carbon::createFromFormat('H:i', $request->dariJam);
+        //     $sampaiBetween = \Carbon\Carbon::createFromFormat('H:i', $request->sampai);
+        //     // \dd($data);
+    
+        //     if ($dariJam->between($startTime, $endTime, true) && $sampaiBetween->between($endTime, $startTime, true)) {
+        //         \dd($value);
+
+        //         // \session()->flash('pesan', 'Tanggal '.$jadwalMaha->tglPinjam.' Ruangan '.$jadwalMaha->room->ruang.' masih di gunakan sampai jam '.$jadwalMaha->sampaiJam.' !!!');
+        //         // return \redirect()->back();
+        //     } else {
+        //         dd('not in between');
+        //     }
+        // }
+        
+        // foreach ($tglPinjamMaha as $value) {
+        //     $searchStartTime = PeminjamanAuditorium::where('dariJam', $request->dariJam)->first();
+
+        //     $startTime = \Carbon\Carbon::createFromFormat('H:i', $value->dariJam);
+        //     $endTime = \Carbon\Carbon::createFromFormat('H:i', $value->sampaiJam);
+        // }
+        // $dariJam = \Carbon\Carbon::createFromFormat('H:i', $request->dariJam);
+        // // \dd($data);
+
+        // if ($dariJam->between($startTime, $endTime, true)) {
+        //     //in between
+        //     \dd($value);
+
+        //     // \session()->flash('pesan', 'Tanggal '.$jadwalMaha->tglPinjam.' Ruangan '.$jadwalMaha->room->ruang.' masih di gunakan sampai jam '.$jadwalMaha->sampaiJam.' !!!');
+        //     // return \redirect()->back();
+        // } else {
+        //     dd('not in between');
+        // }
+        
+        //BATAS
         $image = null;
         if ($request->hasFile('image')) {
             $image = $request->file('image')->store('uploads');
@@ -65,6 +105,7 @@ class PeminjamanController extends Controller
         $peminjaman = PeminjamanAuditorium::create($dataPeminjam);
         $peminjaman->update(['status' => 1]);
 
+        //simpan detail peminjaman mahasiswa
         if (\count($request->fasilitas) > 0) {
             foreach($request->fasilitas as $key => $v){
                 $data = [
@@ -76,7 +117,7 @@ class PeminjamanController extends Controller
             }
         }
 
-        //Send Email
+        //Kirim alam email
         $email = $request->email;
         $peminjam = PeminjamanAuditorium::findOrFail($peminjaman->id);
         $data = [
@@ -143,6 +184,7 @@ class PeminjamanController extends Controller
             \session()->flash('pesan', 'User belum terdaftar');
             return \redirect()->back();
         }
+
         $image = $peminjaman->image ?? null;
         if ($request->hasFile('image')) {
             Storage::delete($peminjaman->image);
