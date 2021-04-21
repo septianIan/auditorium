@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class MahasiswaControllerTest extends TestCase
 {
-    use WithFaker, DatabaseTransactions;
+    use WithFaker, RefreshDatabase;
     /**
      * A basic feature test example.
      *
@@ -59,7 +59,7 @@ class MahasiswaControllerTest extends TestCase
          */
 
         //kita membuat data baru dengan array di atas
-        $student = Mahasiswa::insert($data);
+        Mahasiswa::insert($data);
         //kita cek apakah benar data tersebut sudah ada di database
         $this->assertDatabaseHas('mahasiswas', [
             $data

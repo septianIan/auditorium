@@ -128,7 +128,35 @@ class RuangFasilitasController extends Controller
         ]);
     }
 
-    // public function cariTglPinjam(Request $request)
+    public function cariStok(Request $request)
+    {
+        $relRuangFasilitas = RuangFasilitas::where('fasilitas', $request->fasilitas)->first();
+        return \response()->json($relRuangFasilitas);
+    }
+
+    /**
+     * Cari Nik dengan request ajax
+     */
+    public function cariNik(Request $request)
+    {
+        $nik = DB::table('pegawais')->where('nik', $request->nik)->first();
+        if (!empty($nik)) {
+            $success = true;
+            $message = 'Nik sudah terdaftar';
+            $data = $nik;
+        } else {
+            $success = \false;
+            $message = 'Nik belum terdaftar';
+            $data = '';
+        }
+        return \response()->json([
+            'success' => $success,
+            'message' => $message,
+            'pegawai' => $data,
+        ]);
+    }
+
+        // public function cariTglPinjam(Request $request)
     // {
     //     $tglPinjamMaha = PeminjamanAuditorium::where([
     //         ['room_id', '=', $request->room_id],
@@ -184,31 +212,4 @@ class RuangFasilitasController extends Controller
     //     ]);
     // }
 
-    public function cariStok(Request $request)
-    {
-        $relRuangFasilitas = RuangFasilitas::where('fasilitas', $request->fasilitas)->first();
-        return \response()->json($relRuangFasilitas);
-    }
-
-    /**
-     * Cari Nik dengan request ajax
-     */
-    public function cariNik(Request $request)
-    {
-        $nik = DB::table('pegawais')->where('nik', $request->nik)->first();
-        if (!empty($nik)) {
-            $success = true;
-            $message = 'Nik sudah terdaftar';
-            $data = $nik;
-        } else {
-            $success = \false;
-            $message = 'Nik belum terdaftar';
-            $data = '';
-        }
-        return \response()->json([
-            'success' => $success,
-            'message' => $message,
-            'pegawai' => $data,
-        ]);
-    }
 }

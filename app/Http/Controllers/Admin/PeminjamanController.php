@@ -47,53 +47,11 @@ class PeminjamanController extends Controller
      */
     public function store(RequestFromPeminjaman $request)
     {  
-        // $tglPinjamMaha = PeminjamanAuditorium::where([
-        //     ['room_id', '=', $request->room_id],
-        //     ['tglPinjam', '=', $request->tglPinjam],
-        // ])->get();
-        
-        // if ($tglPinjamMaha) {
-        //     foreach ($tglPinjamMaha as $value) {
-        //         $startTime = \Carbon\Carbon::createFromFormat('H:i', $value->dariJam);
-        //         $endTime = \Carbon\Carbon::createFromFormat('H:i', $value->sampaiJam);
-        //     }
-        //     $dariJam = \Carbon\Carbon::createFromFormat('H:i', $request->dariJam);
-        //     $sampaiBetween = \Carbon\Carbon::createFromFormat('H:i', $request->sampai);
-        //     // \dd($data);
-    
-        //     if ($dariJam->between($startTime, $endTime, true) && $sampaiBetween->between($endTime, $startTime, true)) {
-        //         \dd($value);
-
-        //         // \session()->flash('pesan', 'Tanggal '.$jadwalMaha->tglPinjam.' Ruangan '.$jadwalMaha->room->ruang.' masih di gunakan sampai jam '.$jadwalMaha->sampaiJam.' !!!');
-        //         // return \redirect()->back();
-        //     } else {
-        //         dd('not in between');
-        //     }
-        // }
-        
-        // foreach ($tglPinjamMaha as $value) {
-        //     $searchStartTime = PeminjamanAuditorium::where('dariJam', $request->dariJam)->first();
-
-        //     $startTime = \Carbon\Carbon::createFromFormat('H:i', $value->dariJam);
-        //     $endTime = \Carbon\Carbon::createFromFormat('H:i', $value->sampaiJam);
-        // }
-        // $dariJam = \Carbon\Carbon::createFromFormat('H:i', $request->dariJam);
-        // // \dd($data);
-
-        // if ($dariJam->between($startTime, $endTime, true)) {
-        //     //in between
-        //     \dd($value);
-
-        //     // \session()->flash('pesan', 'Tanggal '.$jadwalMaha->tglPinjam.' Ruangan '.$jadwalMaha->room->ruang.' masih di gunakan sampai jam '.$jadwalMaha->sampaiJam.' !!!');
-        //     // return \redirect()->back();
-        // } else {
-        //     dd('not in between');
-        // }
-        
         //BATAS
         $image = null;
+        $file = $request->file('file');
         if ($request->hasFile('image')) {
-            $image = $request->file('image')->store('uploads');
+            $image = $request->file('image')->storeAs('files', $file->getClientOriginalName(), 'local');
         }
 
         $mahasiswa = Mahasiswa::where('nim', $request->nim)->first();
@@ -132,7 +90,7 @@ class PeminjamanController extends Controller
             $mail->from('adamwahyu929@gmail.com', 'Peminjaman Auditorium');
         });
 
-        //cek kegagalan
+        // //cek kegagalan
         // if (Mail::failures()) {
         //     return "Gagal mengirim Email";
         // }

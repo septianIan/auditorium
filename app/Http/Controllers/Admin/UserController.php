@@ -53,6 +53,7 @@ class UserController extends Controller
             'role' => $request->role
         ]);
         
+        //buat milih role user
         $user->assignRole($request->role);
         return \redirect(route('admin.user.index'))->with(['pesan' => 'User: ' . $user->name . ' Ditambahkan']);
 
